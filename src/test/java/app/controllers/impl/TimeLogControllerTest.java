@@ -16,7 +16,7 @@ import org.junit.jupiter.api.Test;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
 
-class CandidateControllerTest {
+class TimeLogControllerTest {
     private static final String BASE_URL = "http://localhost:7777/api";
     private static EntityManagerFactory emfTest;
     private static ObjectMapper jsonMapper = new ObjectMapper();

@@ -1,6 +1,6 @@
 package app.security.routes;
 
-import app.security.controllers.SecurityController;
+import app.security.controllers.impl.SecurityController;
 import app.utils.Utils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.javalin.apibuilder.EndpointGroup;

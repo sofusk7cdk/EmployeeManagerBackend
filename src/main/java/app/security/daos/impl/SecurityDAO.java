@@ -1,9 +1,10 @@
-package app.security.daos;
+package app.security.daos.impl;
 
 import app.exceptions.EntityNotFoundException;
 import app.exceptions.ValidationException;
-import app.security.entities.Role;
-import app.security.entities.User;
+import app.security.daos.ISecurityDAO;
+import app.security.entities.impl.Role;
+import app.security.entities.impl.User;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 

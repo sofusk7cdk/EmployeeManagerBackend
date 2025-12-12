@@ -2,8 +2,8 @@ package app.security.daos;
 
 import app.exceptions.EntityNotFoundException;
 import app.exceptions.ValidationException;
-import app.security.entities.Role;
-import app.security.entities.User;
+import app.security.entities.impl.Role;
+import app.security.entities.impl.User;
 
 
 public interface ISecurityDAO {

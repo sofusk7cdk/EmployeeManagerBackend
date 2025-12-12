@@ -3,7 +3,7 @@ package app.config;
 
 import app.exceptions.ApiException;
 import app.security.controllers.ISecurityController;
-import app.security.controllers.SecurityController;
+import app.security.controllers.impl.SecurityController;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import io.javalin.Javalin;

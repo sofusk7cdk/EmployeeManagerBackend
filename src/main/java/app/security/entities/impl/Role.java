@@ -1,4 +1,4 @@
-package app.security.entities;
+package app.security.entities.impl;
 
 import jakarta.persistence.*;
 import lombok.Getter;

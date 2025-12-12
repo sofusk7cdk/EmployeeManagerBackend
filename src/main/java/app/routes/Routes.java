@@ -6,14 +6,12 @@ import static io.javalin.apibuilder.ApiBuilder.path;
 
 public class Routes {
     private PopulatorRoutes populatorRoutes = new PopulatorRoutes();
-    private CandidateRoutes candidateRoutes = new CandidateRoutes();
-    private ReportRoutes reportRoutes = new ReportRoutes();
+    private TimeLogRoutes candidateRoutes = new TimeLogRoutes();
 
     public EndpointGroup getRoutes() {
         return () -> {
             path("/populate", populatorRoutes.getRoutes());
             path("/candidates", candidateRoutes.getRoutes());
-            path("/reports/candidates", reportRoutes.getRoutes());
         };
     }
 }

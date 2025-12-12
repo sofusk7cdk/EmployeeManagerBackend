@@ -1,11 +1,12 @@
-package app.security.controllers;
+package app.security.controllers.impl;
 
 import app.config.HibernateConfig;
 import app.exceptions.ApiException;
 import app.exceptions.ValidationException;
+import app.security.controllers.ISecurityController;
 import app.security.daos.ISecurityDAO;
-import app.security.daos.SecurityDAO;
-import app.security.entities.User;
+import app.security.daos.impl.SecurityDAO;
+import app.security.entities.impl.User;
 import app.utils.Utils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;

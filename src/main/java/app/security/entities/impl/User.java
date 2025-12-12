@@ -1,5 +1,6 @@
-package app.security.entities;
+package app.security.entities.impl;
 
+import app.security.entities.ISecurityUser;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

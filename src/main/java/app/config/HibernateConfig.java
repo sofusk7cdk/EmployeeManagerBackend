@@ -1,9 +1,8 @@
 package app.config;
 
-import app.entities.Candidate;
-import app.entities.Skill;
-import app.security.entities.Role;
-import app.security.entities.User;
+import app.entities.TimeLog;
+import app.security.entities.impl.Role;
+import app.security.entities.impl.User;
 import app.utils.Utils;
 import jakarta.persistence.EntityManagerFactory;
 import org.hibernate.SessionFactory;
@@ -43,8 +42,7 @@ public class HibernateConfig {
 
     // TODO: IMPORTANT: Add Entity classes here for them to be registered with Hibernate
     private static void getAnnotationConfiguration(Configuration configuration) {
-        configuration.addAnnotatedClass(Skill.class);
-        configuration.addAnnotatedClass(Candidate.class);
+        configuration.addAnnotatedClass(TimeLog.class);
         configuration.addAnnotatedClass(User.class);
         configuration.addAnnotatedClass(Role.class);
     }
