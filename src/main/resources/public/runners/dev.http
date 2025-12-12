@@ -1,0 +1,97 @@
+### populate database
+POST {{url}}/populate
+
+### register a user
+POST {{url}}/auth/register
+
+{
+    "username": "user1",
+    "password": "pass12345"
+}
+
+### login
+POST {{url}}/auth/login
+
+{
+    "username": "user1",
+    "password": "pass12345"
+}
+
+> {%
+    client.global.set("jwt_token", response.body.token);
+    console.log("JWT Token:", client.global.get("jwt_token"));
+%}
+
+### test user token
+GET {{url}}/protected/user_demo
+AUTHORIZATION: Bearer {{jwt_token}}
+
+### test admin token
+GET {{url}}/protected/admin_demo
+AUTHORIZATION: Bearer {{jwt_token}}
+
+### Add admin role to user (Login again when role added)
+POST {{url}}/auth/user/addrole/
+Accept: application/json
+Authorization: Bearer {{jwt_token}}
+
+{
+    "role": "admin"
+}
+Accept: application/json
+Authorization: Bearer {{jwt_token}}
+
+
+### create a candidate -- User Token
+POST {{url}}/candidates
+Content-Type: application/json
+Authorization: Bearer {{jwt_token}}
+
+{
+  "name": "Alice Andersen",
+  "phone": "12345678",
+  "educationBackground": "Computer Science"
+}
+
+### find candidate by id -- User Token
+GET {{url}}/candidates/3
+Accept: application/json
+Authorization: Bearer {{jwt_token}}
+
+### find all existing candidates -- User Token
+GET {{url}}/candidates
+Accept: application/json
+Authorization: Bearer {{jwt_token}}
+
+### update a candidate -- User Token
+PUT {{url}}/candidates
+Content-Type: application/json
+Authorization: Bearer {{jwt_token}}
+
+{
+  "id": 1,
+  "name": "Alice A.",
+  "phone": "87654321",
+  "educationBackground": "Software Engineering"
+}
+
+### delete candidate -- User Token
+DELETE {{url}}/candidates/1
+Accept: application/json
+Authorization: Bearer {{jwt_token}}
+
+
+### link guide to specific candidate -- User Token
+PUT {{url}}/candidates/1/skill/23
+Accept: application/json
+Authorization: Bearer {{jwt_token}}
+
+### find candidate based on category -- User Token
+GET {{url}}/candidates?category=DB
+Accept: application/json
+Authorization: Bearer {{jwt_token}}
+
+### get candidate with top popularity -- User Token
+GET {{url}}/reports/candidates/top-by-popularity
+Accept: application/json
+Authorization: Bearer {{jwt_token}}
