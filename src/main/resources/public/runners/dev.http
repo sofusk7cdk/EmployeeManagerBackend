@@ -42,56 +42,43 @@ Accept: application/json
 Authorization: Bearer {{jwt_token}}
 
 
-### create a candidate -- User Token
-POST {{url}}/candidates
+### create a timelog -- User Token
+POST {{url}}/timelogs
 Content-Type: application/json
 Authorization: Bearer {{jwt_token}}
 
 {
-  "name": "Alice Andersen",
-  "phone": "12345678",
-  "educationBackground": "Computer Science"
+  "users": ["user1"],
+  "dateTime": "2025-12-12T10:00:00",
+  "hours": 2.5,
+  "description": "Worked on Employee Manager"
 }
-
-### find candidate by id -- User Token
-GET {{url}}/candidates/3
+### find timelog by id -- User Token
+GET {{url}}/timelogs/1
 Accept: application/json
 Authorization: Bearer {{jwt_token}}
 
-### find all existing candidates -- User Token
-GET {{url}}/candidates
+### find all existing timelogs -- User Token
+GET {{url}}/timelogs
 Accept: application/json
 Authorization: Bearer {{jwt_token}}
 
-### update a candidate -- User Token
-PUT {{url}}/candidates
+### update a timelog -- User Token
+PUT {{url}}/timelogs/1
 Content-Type: application/json
 Authorization: Bearer {{jwt_token}}
 
 {
-  "id": 1,
-  "name": "Alice A.",
-  "phone": "87654321",
-  "educationBackground": "Software Engineering"
+  "users": ["user1"],
+  "dateTime": "2025-12-12T10:00:00",
+  "hours": 3.5,
+  "description": "Worked on Employee Manager"
 }
 
-### delete candidate -- User Token
-DELETE {{url}}/candidates/1
+### delete timelog -- User Token
+DELETE {{url}}/timelogs/1
 Accept: application/json
 Authorization: Bearer {{jwt_token}}
 
 
-### link guide to specific candidate -- User Token
-PUT {{url}}/candidates/1/skill/23
-Accept: application/json
-Authorization: Bearer {{jwt_token}}
 
-### find candidate based on category -- User Token
-GET {{url}}/candidates?category=DB
-Accept: application/json
-Authorization: Bearer {{jwt_token}}
-
-### get candidate with top popularity -- User Token
-GET {{url}}/reports/candidates/top-by-popularity
-Accept: application/json
-Authorization: Bearer {{jwt_token}}

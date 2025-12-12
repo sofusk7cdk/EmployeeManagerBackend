@@ -11,7 +11,7 @@ public class Routes {
     public EndpointGroup getRoutes() {
         return () -> {
             path("/populate", populatorRoutes.getRoutes());
-            path("/candidates", candidateRoutes.getRoutes());
+            path("/timelogs", candidateRoutes.getRoutes());
         };
     }
 }

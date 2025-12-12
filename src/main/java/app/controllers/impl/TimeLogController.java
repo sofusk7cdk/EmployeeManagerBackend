@@ -63,11 +63,13 @@ public class TimeLogController implements IController<TimeLogDTO, Integer> {
 
     @Override
     public void update(Context ctx) {
+        int id = ctx.pathParamAsClass("id", Integer.class).check(this::validatePrimaryKey, "Not a valid id").get();
+
         TimeLogDTO requestDTO = ctx.bodyAsClass(TimeLogDTO.class);
 
         TimeLog timeLog = timeLogMapper.dtoToEntity(requestDTO);
 
-        TimeLog updatedCandidate = timeLogDAO.update(timeLog.getId(), timeLog);
+        TimeLog updatedCandidate = timeLogDAO.update(id, timeLog);
 
         TimeLogDTO responseDTO = timeLogMapper.entityToDTO(updatedCandidate);
 

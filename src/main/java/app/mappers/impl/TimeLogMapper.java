@@ -1,31 +1,33 @@
 package app.mappers.impl;
+import app.config.HibernateConfig;
 import app.dtos.TimeLogDTO;
 import app.entities.TimeLog;
 import app.mappers.IMapper;
+import app.security.daos.impl.SecurityDAO;
 import app.security.entities.impl.User;
+import jakarta.persistence.EntityManagerFactory;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class TimeLogMapper implements IMapper<TimeLog, TimeLogDTO> {
+    private final SecurityDAO securityDAO = new SecurityDAO(HibernateConfig.getEntityManagerFactory());
 
     @Override
     public TimeLog dtoToEntity(TimeLogDTO dto) {
-        List<User> userIds = dto.getUsers()
+        List<User> users = dto.getUsers()
                 .stream()
-                .map(id -> {
-                    User u = new User();
-                    u.setUsername(id);
-                    return u;
-                })
+                .map(username -> securityDAO.findUser(username))
                 .collect(Collectors.toList());
 
         return new TimeLog(
-                userIds,
+                users,
                 dto.getDateTime(),
                 dto.getHours(),
                 dto.getDescription()
         );
     }
+
 
     @Override
     public TimeLogDTO entityToDTO(TimeLog entity) {

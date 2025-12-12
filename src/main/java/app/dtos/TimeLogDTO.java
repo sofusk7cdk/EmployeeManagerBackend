@@ -1,7 +1,5 @@
 package app.dtos;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,17 +11,11 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
-@JsonIgnoreProperties
 public class TimeLogDTO {
-    @JsonIgnore
     private int id;
-    @JsonIgnore
     private List<String> users;
-    @JsonIgnore
     private String dateTime;
-    @JsonIgnore
     private Double hours;
-    @JsonIgnore
     private String description;
 
 

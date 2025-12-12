@@ -76,4 +76,10 @@ public class SecurityDAO implements ISecurityDAO {
             return user != null;
         }
     }
+
+    public User findUser(String username) {
+        try (EntityManager em = emf.createEntityManager()) {
+            return em.find(User.class, username);
+        }
+    }
 }
