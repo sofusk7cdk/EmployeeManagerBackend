@@ -14,7 +14,7 @@ public class AdminRoutes {
 
     public EndpointGroup getRoutes() {
         return () -> {
-            post("/register", securityController.register(), SecurityRoutes.Role.USER);
+            post("/register", securityController.register(), SecurityRoutes.Role.ADMIN);
             get("/{username}", controller::read, SecurityRoutes.Role.ADMIN);
             get("/", controller::readAll, SecurityRoutes.Role.ADMIN);
             put("/{id}", controller::update, SecurityRoutes.Role.ADMIN);

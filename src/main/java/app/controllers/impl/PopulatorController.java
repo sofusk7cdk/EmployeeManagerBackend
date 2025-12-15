@@ -17,19 +17,17 @@ import jakarta.persistence.EntityManagerFactory;
 public class PopulatorController {
     private final EntityManagerFactory emf = HibernateConfig.getEntityManagerFactory();
 
-    private final TimeLogDAO timeLogDAO = new TimeLogDAO(emf);
     private final SecurityDAO securityDAO = new SecurityDAO(emf);
 
     private final ObjectMapper objectMapper = new Utils().getObjectMapper();
 
     public void populator(Context ctx) throws EntityNotFoundException {
-        securityDAO.createRole("ADMIN");
         securityDAO.createUser("admin", "1234");
 
-        securityDAO.addUserRole("admin", "ADMIN");
+        securityDAO.addUserRole("admin", "admin");
 
         ObjectNode on = objectMapper.createObjectNode()
-                .put("msg", "Populated with candidates and skills.");
+                .put("msg", "Populated with admin.");
 
         ctx.status(HttpStatus.CREATED)
                 .json(on);
