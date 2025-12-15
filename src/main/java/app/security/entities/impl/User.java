@@ -3,10 +3,7 @@ package app.security.entities.impl;
 import app.entities.TimeLog;
 import app.security.entities.ISecurityUser;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.mindrot.jbcrypt.BCrypt;
 
 import java.util.List;

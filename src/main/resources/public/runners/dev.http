@@ -1,13 +1,28 @@
 ### populate database
 POST {{url}}/populate
 
+### login
+POST {{url}}/auth/login
+
+{
+    "username": "admin",
+    "password": "1234"
+}
+
 ### register a user
-POST {{url}}/auth/register
+POST {{url}}/admin/register
+AUTHORIZATION: Bearer {{jwt_token}}
 
 {
     "username": "user1",
     "password": "pass12345"
 }
+
+### Find a user
+GET {{url}}/admin/user1
+AUTHORIZATION: Bearer {{jwt_token}}
+
+
 
 ### login
 POST {{url}}/auth/login
