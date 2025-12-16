@@ -20,8 +20,8 @@ public class TimeLog {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    private List<User> users;
+    @ManyToOne(fetch = FetchType.EAGER)
+    private User user;
 
     private String dateTime;
 
@@ -30,18 +30,10 @@ public class TimeLog {
     private String description;
 
 
-    public TimeLog(List<User> users, String dateTime, Double hours, String description) {
-        this.users = users;
+    public TimeLog(User user, String dateTime, Double hours, String description) {
+        this.user = user;
         this.dateTime = dateTime;
         this.hours = hours;
         this.description = description;
-    }
-
-    public void addEmployee(User user) {
-        users.add(user);
-    }
-
-    public void removeSkill(User user) {
-        users.remove(user);
     }
 }

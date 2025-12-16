@@ -5,23 +5,17 @@ import app.entities.TimeLog;
 import app.mappers.IMapper;
 import app.security.daos.impl.SecurityDAO;
 import app.security.entities.impl.User;
-import jakarta.persistence.EntityManagerFactory;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class TimeLogMapper implements IMapper<TimeLog, TimeLogDTO> {
     private final SecurityDAO securityDAO = new SecurityDAO(HibernateConfig.getEntityManagerFactory());
 
     @Override
     public TimeLog dtoToEntity(TimeLogDTO dto) {
-        List<User> users = dto.getUsers()
-                .stream()
-                .map(username -> securityDAO.findUser(username))
-                .collect(Collectors.toList());
+
+        User user = securityDAO.findUser(dto.getUser());
 
         return new TimeLog(
-                users,
+                user,
                 dto.getDateTime(),
                 dto.getHours(),
                 dto.getDescription()
@@ -31,14 +25,12 @@ public class TimeLogMapper implements IMapper<TimeLog, TimeLogDTO> {
 
     @Override
     public TimeLogDTO entityToDTO(TimeLog entity) {
-        List<String> users = entity.getUsers()
-                .stream()
-                .map(User::getUsername)
-                .collect(Collectors.toList());
+
+        String username = entity.getUser().getUsername();
 
         return new TimeLogDTO(
                 entity.getId(),
-                users,
+                username,
                 entity.getDateTime(),
                 entity.getHours(),
                 entity.getDescription()

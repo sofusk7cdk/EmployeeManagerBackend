@@ -18,7 +18,7 @@ POST {{url}}/admin/employee/register
 AUTHORIZATION: Bearer {{jwt_token}}
 
 {
-    "username": "user3",
+    "username": "user1",
     "firstName": "John",
     "lastName": "doe",
     "email": "john@com",
@@ -55,7 +55,7 @@ Authorization: Bearer {{jwt_token}}
 POST {{url}}/auth/login
 
 {
-    "username": "user2",
+    "username": "user1",
     "password": "1234"
 }
 
@@ -78,7 +78,7 @@ Content-Type: application/json
 Authorization: Bearer {{jwt_token}}
 
 {
-  "users": ["user3"],
+  "user": "user1",
   "dateTime": "2025-12-12T10:00:00",
   "hours": 2.5,
   "description": "Worked on Employee Manager"
@@ -94,7 +94,7 @@ Accept: application/json
 Authorization: Bearer {{jwt_token}}
 
 ### find for user -- User token
-GET {{url}}/timelogs/employee/user2
+GET {{url}}/timelogs/employee/user1
 Accept: application/json
 Authorization: Bearer {{jwt_token}}
 
@@ -104,7 +104,7 @@ Content-Type: application/json
 Authorization: Bearer {{jwt_token}}
 
 {
-  "users": ["user1"],
+  "user": "user1",
   "dateTime": "2025-12-12T10:00:00",
   "hours": 3.5,
   "description": "Worked on Employee Manager"

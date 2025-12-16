@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -13,14 +12,14 @@ import java.util.List;
 @Setter
 public class TimeLogDTO {
     private int id;
-    private List<String> users;
+    private String user;
     private String dateTime;
     private Double hours;
     private String description;
 
 
-    public TimeLogDTO(List<String> users, String dateTime, Double hours, String description) {
-        this.users = users;
+    public TimeLogDTO(String user, String dateTime, Double hours, String description) {
+        this.user = user;
         this.dateTime = dateTime;
         this.hours = hours;
         this.description = description;

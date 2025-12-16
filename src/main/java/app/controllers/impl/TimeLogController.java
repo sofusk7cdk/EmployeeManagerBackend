@@ -46,9 +46,9 @@ public class TimeLogController implements IController<TimeLogDTO, Integer> {
                 .json(responseDTOS);
     }
 
-    public void readAllForEmployee(Context ctx) {
+    public void readAllForEmployee(Context ctx) throws ApiException {
         String username = ctx.pathParam("username");
-        try {
+
             List<TimeLog> timeLogs = timeLogDAO.readAllForEmployee(username);
 
             List<TimeLogDTO> responseDTOS = timeLogs.stream()
@@ -57,9 +57,7 @@ public class TimeLogController implements IController<TimeLogDTO, Integer> {
 
             ctx.status(HttpStatus.OK)
                     .json(responseDTOS);
-        } catch (ApiException e) {
-            e.getMessage();
-        }
+
     }
 
 
@@ -116,7 +114,7 @@ public class TimeLogController implements IController<TimeLogDTO, Integer> {
     @Override
     public TimeLogDTO validateDTO(Context ctx) {
         return ctx.bodyValidator(TimeLogDTO.class)
-                .check(c -> c.getUsers() != null && !c.getUsers().isEmpty(), "Users name must be set")
+                .check(c -> c.getUser() != null && !c.getUser().isEmpty(), "Users name must be set")
                 .check(c -> c.getDateTime() != null && !c.getDateTime().isEmpty(), "Date time must be set")
                 .check(c -> c.getHours() != null, "Hours must be set")
                 .check(c -> c.getDescription() != null && !c.getDescription().isEmpty(), "Description must be set")
