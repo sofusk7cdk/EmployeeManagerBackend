@@ -8,21 +8,48 @@ POST {{url}}/auth/login
     "username": "admin",
     "password": "1234"
 }
+> {%
+    client.global.set("jwt_token", response.body.token);
+    console.log("JWT Token:", client.global.get("jwt_token"));
+%}
 
 ### register a user
-POST {{url}}/admin/register
+POST {{url}}/admin/employee/register
 AUTHORIZATION: Bearer {{jwt_token}}
 
 {
-    "username": "user1",
+    "username": "user5",
+    "firstName": "John",
+    "lastName": "doe",
+    "email": "john@com",
     "password": "pass12345"
 }
 
 ### Find a user
-GET {{url}}/admin/user1
+GET {{url}}/admin/employee/user1
+AUTHORIZATION: Bearer {{jwt_token}}
+
+### Find all users
+GET {{url}}/admin/employees
 AUTHORIZATION: Bearer {{jwt_token}}
 
 
+### update a user -- Admin Token
+PUT {{url}}/admin/employee/user1
+Content-Type: application/json
+Authorization: Bearer {{jwt_token}}
+
+{
+  "firstName": "Bob",
+  "lastName": "doe",
+  "email": "bob@com",
+  "password": "pass12345"
+}
+
+### delete user -- Admin Token
+DELETE {{url}}/admin/employee/user1
+Accept: application/json
+Authorization: Bearer {{jwt_token}}
 
 ### login
 POST {{url}}/auth/login
@@ -44,18 +71,6 @@ AUTHORIZATION: Bearer {{jwt_token}}
 ### test admin token
 GET {{url}}/protected/admin_demo
 AUTHORIZATION: Bearer {{jwt_token}}
-
-### Add admin role to user (Login again when role added)
-POST {{url}}/auth/user/addrole/
-Accept: application/json
-Authorization: Bearer {{jwt_token}}
-
-{
-    "role": "admin"
-}
-Accept: application/json
-Authorization: Bearer {{jwt_token}}
-
 
 ### create a timelog -- User Token
 POST {{url}}/timelogs

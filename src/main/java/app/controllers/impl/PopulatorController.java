@@ -22,7 +22,7 @@ public class PopulatorController {
     private final ObjectMapper objectMapper = new Utils().getObjectMapper();
 
     public void populator(Context ctx) throws EntityNotFoundException {
-        securityDAO.createUser("admin", "1234");
+        securityDAO.createUser("admin", "Sofus", "Larsen", "someone@com", "1234");
 
         securityDAO.addUserRole("admin", "admin");
 

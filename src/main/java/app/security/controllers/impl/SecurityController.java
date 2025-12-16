@@ -69,11 +69,14 @@ public class SecurityController implements ISecurityController {
         return ctx -> {
             User user = ctx.bodyAsClass(User.class);
             String username = user.getUsername();
+            String firstName = user.getFirstName();
+            String lastName = user.getLastName();
+            String email = user.getEmail();
             String password = user.getPassword();
 
             try {
 
-                securityDAO.createUser(username, password);
+                securityDAO.createUser(username, firstName, lastName, email, password);
                 securityDAO.addUserRole(username, "user");
 
                 User verified = securityDAO.getVerifiedUser(username, password);

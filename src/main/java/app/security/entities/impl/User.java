@@ -19,13 +19,19 @@ public class User implements ISecurityUser {
     @Id
     @Column(name = "username", nullable = false)
     private String username;
+    private String firstName;
+    private String lastName;
+    private String email;
     private String password;
 
     @ManyToMany(mappedBy = "users", fetch = FetchType.EAGER)
     private Set<Role> roles;
 
-    public User(String username, String password){
+    public User(String username, String firstName, String lastName, String email, String password){
         this.username = username;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
         String hashed = BCrypt.hashpw(password, BCrypt.gensalt());
         this.password = hashed;
     }

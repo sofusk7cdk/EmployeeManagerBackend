@@ -1,12 +1,19 @@
 package app.security.daos.impl;
 
+import app.entities.TimeLog;
+import app.exceptions.ApiException;
 import app.exceptions.EntityNotFoundException;
 import app.exceptions.ValidationException;
 import app.security.daos.ISecurityDAO;
 import app.security.entities.impl.Role;
 import app.security.entities.impl.User;
+import app.security.routes.SecurityRoutes;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.NoResultException;
+import jakarta.persistence.TypedQuery;
+
+import java.util.List;
 
 public class SecurityDAO implements ISecurityDAO {
     EntityManagerFactory emf;
@@ -20,7 +27,6 @@ public class SecurityDAO implements ISecurityDAO {
         try(EntityManager em = emf.createEntityManager()){
             User foundUser = em.find(User.class, username);
             foundUser.getRoles();
-
             if(foundUser != null && foundUser.verifyPassword(password)){
                 return foundUser;
             } else {
@@ -30,9 +36,9 @@ public class SecurityDAO implements ISecurityDAO {
     }
 
     @Override
-    public User createUser(String username, String password) {
+    public User createUser(String username, String firstName, String lastName, String email, String password) {
         try(EntityManager em = emf.createEntityManager()){
-            User user = new User(username, password);
+            User user = new User(username, firstName, lastName, email, password);
             em.getTransaction().begin();
             em.persist(user);
             em.getTransaction().commit();
@@ -82,4 +88,73 @@ public class SecurityDAO implements ISecurityDAO {
             return em.find(User.class, username);
         }
     }
+
+    public List<User> readAll() {
+        List<User> users;
+        try(EntityManager em = emf.createEntityManager()){
+            TypedQuery<User> query = em.createQuery(
+                    "SELECT u FROM User u", User.class
+            );
+            users = query.getResultList();
+            if (users.isEmpty()) {
+                throw new ApiException(404, "No users found");
+            }
+            return users;
+        }
+    }
+
+    //TODO update
+    public User update(String username, User user) throws ApiException {
+        try (EntityManager em = emf.createEntityManager()) {
+            em.getTransaction().begin();
+
+            TypedQuery<User> query = em.createQuery(
+                    "SELECT u FROM User u WHERE u.username = :username", User.class
+            );
+            query.setParameter("username", username);
+
+            User updatedUser;
+            try {
+                updatedUser = query.getSingleResult();
+            } catch (NoResultException e) {
+                throw new ApiException(404, username + " not found");
+            }
+
+            updatedUser.setFirstName(user.getFirstName());
+            updatedUser.setLastName(user.getLastName());
+            updatedUser.setEmail(user.getEmail());
+            updatedUser.setPassword(user.getPassword());
+
+            em.getTransaction().commit();
+            return updatedUser;
+        }
+    }
+
+    //TODO delete
+    public void delete(String username) throws ApiException {
+        try (EntityManager em = emf.createEntityManager()) {
+            em.getTransaction().begin();
+
+            TypedQuery<User> query = em.createQuery(
+                    "SELECT u FROM User u WHERE u.username = :username", User.class
+            );
+            query.setParameter("username", username);
+
+            User deletedUser;
+            try {
+                deletedUser = query.getSingleResult();
+            } catch (NoResultException e) {
+                throw new ApiException(404, username + " not found");
+            }
+
+            for (Role role : deletedUser.getRoles()) {
+                role.getUsers().remove(deletedUser);
+            }
+            deletedUser.getRoles().clear();
+
+            em.remove(deletedUser);
+            em.getTransaction().commit();
+        }
+    }
+
 }
