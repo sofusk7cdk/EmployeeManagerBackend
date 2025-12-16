@@ -4,6 +4,7 @@ import app.controllers.IController;
 import app.daos.impl.TimeLogDAO;
 import app.dtos.TimeLogDTO;
 import app.entities.TimeLog;
+import app.exceptions.ApiException;
 import app.mappers.impl.TimeLogMapper;
 import app.utils.Utils;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -44,6 +45,23 @@ public class TimeLogController implements IController<TimeLogDTO, Integer> {
         ctx.status(HttpStatus.OK)
                 .json(responseDTOS);
     }
+
+    public void readAllForEmployee(Context ctx) {
+        String username = ctx.pathParam("username");
+        try {
+            List<TimeLog> timeLogs = timeLogDAO.readAllForEmployee(username);
+
+            List<TimeLogDTO> responseDTOS = timeLogs.stream()
+                    .map(timeLogMapper::entityToDTO)
+                    .collect(Collectors.toList());
+
+            ctx.status(HttpStatus.OK)
+                    .json(responseDTOS);
+        } catch (ApiException e) {
+            e.getMessage();
+        }
+    }
+
 
     @Override
     public void create(Context ctx) {

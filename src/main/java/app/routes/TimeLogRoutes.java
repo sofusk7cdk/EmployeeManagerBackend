@@ -13,7 +13,8 @@ public class TimeLogRoutes {
         return () -> {
             post("/", controller::create, SecurityRoutes.Role.USER);
             get("/{id}", controller::read, SecurityRoutes.Role.USER);
-            get("/", controller::readAll, SecurityRoutes.Role.USER);
+            get("/", controller::readAll, SecurityRoutes.Role.ADMIN);
+            get("/employee/{username}", controller::readAllForEmployee, SecurityRoutes.Role.USER);
             put("/{id}", controller::update, SecurityRoutes.Role.USER);
             delete("/{id}", controller::delete, SecurityRoutes.Role.USER);
         };

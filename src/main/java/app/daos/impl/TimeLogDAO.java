@@ -40,6 +40,23 @@ public class TimeLogDAO implements IDAO<TimeLog, Integer> {
         }
     }
 
+    public List<TimeLog> readAllForEmployee(String username) throws ApiException {
+        try (EntityManager em = emf.createEntityManager()) {
+            TypedQuery<TimeLog> query = em.createQuery(
+                    "SELECT t FROM TimeLog t JOIN t.users u WHERE u.username = :username",
+                    TimeLog.class
+            );
+            query.setParameter("username", username);
+            List<TimeLog> timeLogs = query.getResultList();
+
+            if (timeLogs.isEmpty()) {
+                throw new ApiException(404, "No time logs found for user " + username);
+            }
+            return timeLogs;
+        }
+    }
+
+
     @Override
     public TimeLog create(TimeLog timeLog) throws ApiException {
         try(EntityManager em = emf.createEntityManager()) {

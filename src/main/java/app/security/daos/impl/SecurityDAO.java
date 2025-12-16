@@ -12,6 +12,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
+import org.mindrot.jbcrypt.BCrypt;
 
 import java.util.List;
 
@@ -103,34 +104,41 @@ public class SecurityDAO implements ISecurityDAO {
         }
     }
 
-    //TODO update
-    public User update(String username, User user) throws ApiException {
+    public User update(String username, User incoming) throws ApiException {
         try (EntityManager em = emf.createEntityManager()) {
             em.getTransaction().begin();
 
-            TypedQuery<User> query = em.createQuery(
-                    "SELECT u FROM User u WHERE u.username = :username", User.class
-            );
-            query.setParameter("username", username);
-
-            User updatedUser;
+            User existing;
             try {
-                updatedUser = query.getSingleResult();
+                existing = em.createQuery(
+                                "SELECT u FROM User u WHERE u.username = :username", User.class
+                        )
+                        .setParameter("username", username)
+                        .getSingleResult();
             } catch (NoResultException e) {
                 throw new ApiException(404, username + " not found");
             }
 
-            updatedUser.setFirstName(user.getFirstName());
-            updatedUser.setLastName(user.getLastName());
-            updatedUser.setEmail(user.getEmail());
-            updatedUser.setPassword(user.getPassword());
+            if (incoming.getFirstName() != null)
+                existing.setFirstName(incoming.getFirstName());
+
+            if (incoming.getLastName() != null)
+                existing.setLastName(incoming.getLastName());
+
+            if (incoming.getEmail() != null)
+                existing.setEmail(incoming.getEmail());
+
+            if (incoming.getPassword() != null && !incoming.getPassword().isBlank()) {
+                String hashed = BCrypt.hashpw(incoming.getPassword(), BCrypt.gensalt());
+                existing.setPassword(hashed);
+            }
 
             em.getTransaction().commit();
-            return updatedUser;
+            return existing;
         }
     }
 
-    //TODO delete
+
     public void delete(String username) throws ApiException {
         try (EntityManager em = emf.createEntityManager()) {
             em.getTransaction().begin();

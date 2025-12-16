@@ -18,11 +18,11 @@ POST {{url}}/admin/employee/register
 AUTHORIZATION: Bearer {{jwt_token}}
 
 {
-    "username": "user5",
+    "username": "user3",
     "firstName": "John",
     "lastName": "doe",
     "email": "john@com",
-    "password": "pass12345"
+    "password": "1234"
 }
 
 ### Find a user
@@ -55,8 +55,8 @@ Authorization: Bearer {{jwt_token}}
 POST {{url}}/auth/login
 
 {
-    "username": "user1",
-    "password": "pass12345"
+    "username": "user2",
+    "password": "1234"
 }
 
 > {%
@@ -78,7 +78,7 @@ Content-Type: application/json
 Authorization: Bearer {{jwt_token}}
 
 {
-  "users": ["user1"],
+  "users": ["user3"],
   "dateTime": "2025-12-12T10:00:00",
   "hours": 2.5,
   "description": "Worked on Employee Manager"
@@ -88,8 +88,13 @@ GET {{url}}/timelogs/1
 Accept: application/json
 Authorization: Bearer {{jwt_token}}
 
-### find all existing timelogs -- User Token
+### find all existing timelogs -- Admin Token
 GET {{url}}/timelogs
+Accept: application/json
+Authorization: Bearer {{jwt_token}}
+
+### find for user -- User token
+GET {{url}}/timelogs/employee/user2
 Accept: application/json
 Authorization: Bearer {{jwt_token}}
 
